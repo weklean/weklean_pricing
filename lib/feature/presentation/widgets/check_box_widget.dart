@@ -6,7 +6,8 @@ class InAppAdsCheckBox extends CheckboxListTile {
     required super.value,
     required super.onChanged,
   }) : super(
-    title: const Text('Publicité')
+    title: const Text('Publicité'),
+    subtitle: const Text('Bannière publicitaire sous chacun de vos Events')
   );
 }
 
@@ -27,6 +28,7 @@ class SupervisionCheckBox extends CheckboxListTile {
     required super.value,
     required super.onChanged,
   }) : super(
+    enabled: false,
     title: const Text('Encadrement'),
     subtitle: const Text("Encadrement de l'event + matériel")
   );
