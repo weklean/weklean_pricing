@@ -14,14 +14,14 @@ class PriceOptionsForm extends StatelessWidget {
     return Column(
       children: const [
         _CustomerTypeSwitch(),
+        _SupervisionCheckBox(),
         _EventsQuantitySlider(),
         _ParticipantsSlider(),
-        _KleansPerParticipantSlider(),
+        _RewardPerParticipantSlider(),
         _ShootVideosCheckBox(),
         _VideoFrequencySwitch(),
         _InAppAdsCheckBox(),
         _MarketplacePresenceCheckBox(),
-        _SupervisionCheckBox()
       ],
     );
   }
@@ -35,13 +35,10 @@ class _MarketplacePresenceCheckBox extends StatelessWidget {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         if (state.cart.customer == CustomerType.mairie) return const SizedBox.shrink();
-        if (state.cart.shootVideos) {
-          return MarketplacePresenceCheckBox(
-            value: state.cart.marketplacePresence,
-            onChanged: context.read<CartCubit>().onMarketplacePresenceChanged
-          );
-        }
-        return const SizedBox.shrink();
+        return MarketplacePresenceCheckBox(
+          value: state.cart.marketplacePresence,
+          onChanged: context.read<CartCubit>().onMarketplacePresenceChanged
+        );
       }
     );
   }
@@ -81,15 +78,15 @@ class _InAppAdsCheckBox extends StatelessWidget {
   }
 }
 
-class _KleansPerParticipantSlider extends StatelessWidget {
-  const _KleansPerParticipantSlider({Key? key}) : super(key: key);
+class _RewardPerParticipantSlider extends StatelessWidget {
+  const _RewardPerParticipantSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.kleansPerParticipant,
       builder: (context, value) {
-        return KleansPerParticipantSlider(
+        return RewardPerParticipantSlider(
           value: value,
           onChanged: context.read<CartCubit>().onKleansPerParticipantChanged
         );
