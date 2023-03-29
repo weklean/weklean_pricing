@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "fr-weklean-prod"
+  },
+  "targets": {
+    "fr-weklean-prod": {
+      "hosting": {
+        "weklean-pricing": [
+          "weklean-pricing"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
