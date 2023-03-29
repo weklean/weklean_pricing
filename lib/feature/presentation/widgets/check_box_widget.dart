@@ -32,7 +32,7 @@ class SupervisionCheckBox extends CheckboxListTile {
   }) : super(
     enabled: false,
     controlAffinity: ListTileControlAffinity.leading,
-    title: const Text('Encadrement'),
+    title: const Text('Organisation'),
     subtitle: const Text("Encadrement de l'event + matériel")
   );
 }
