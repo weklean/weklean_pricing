@@ -37,11 +37,14 @@ class _TotalPriceText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CartCubit, CartState, double>(
-      selector: (state) => state.cart.totalPrice,
-      builder: (context, value) {
-        return Text("PRIX TOTAL: $value€", style: MyTextStyles.headline2, textAlign: TextAlign.center,);
-      }
+    return Padding(
+      padding: MyShapes.mediumPadding,
+      child: BlocSelector<CartCubit, CartState, double>(
+        selector: (state) => state.cart.totalPrice,
+        builder: (context, value) {
+          return Text("PRIX TOTAL: $value€", style: MyTextStyles.headline2, textAlign: TextAlign.center,);
+        }
+      ),
     );
   }
 }
