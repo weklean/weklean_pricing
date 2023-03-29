@@ -12,7 +12,8 @@ class PriceDisplayWidget extends StatelessWidget {
         _TotalPriceText(),
         _EventUnitPrice(),
         _VideosTotalPrice(),
-        _EventsWithVideosQuantity()
+        _EventsWithVideosQuantity(),
+        _MarketplacePresenceDuration()
       ],
     );
   }
@@ -42,7 +43,7 @@ class _EventUnitPrice extends StatelessWidget {
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.pricePerEvent,
       builder: (context, value) {
-        return Text("Prix par event: $value€", style: textStyle,);
+        return Text("Prix par Event: $value€", style: textStyle,);
       }
     );
   }
@@ -72,7 +73,22 @@ class _EventsWithVideosQuantity extends StatelessWidget {
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.eventsWithVideos,
       builder: (context, value) {
-        return Text("Nombre d'events avec videos: $value", style: textStyle,);
+        return Text("Nombre d'Events avec videos: $value", style: textStyle,);
+      }
+    );
+  }
+}
+
+class _MarketplacePresenceDuration extends StatelessWidget {
+  const _MarketplacePresenceDuration({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.bodyText2;
+    return BlocSelector<CartCubit, CartState, double>(
+      selector: (state) => state.cart.marketplaceDisplayedMonths,
+      builder: (context, value) {
+        return Text("Temps de presence marketplace: $value", style: textStyle,);
       }
     );
   }
