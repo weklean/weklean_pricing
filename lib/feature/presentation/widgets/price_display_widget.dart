@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weklean_package/weklean_package.dart';
 import 'package:weklean_pricing/feature/presentation/blocs/cart_cubit.dart';
 
 class PriceDisplayWidget extends StatelessWidget {
@@ -7,14 +8,26 @@ class PriceDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        _TotalPriceText(),
-        _EventUnitPrice(),
-        _VideosTotalPrice(),
-        _EventsWithVideosQuantity(),
-        _MarketplacePresenceDuration()
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        color: MyColors.primarySoftColor,
+        borderRadius: MyShapes.roundedBordersRadius,
+        //border: Border.all(width: 3, color: MyColors.primaryColor)
+      ),
+      margin: MyShapes.mediumPadding,
+      padding: MyShapes.smallPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: const [
+          _TotalPriceText(),
+          _EventUnitPrice(),
+          _VideosTotalPrice(),
+          _EventsWithVideosQuantity(),
+          _MarketplacePresenceDuration()
+        ],
+      ),
     );
   }
 }
@@ -24,11 +37,10 @@ class _TotalPriceText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.headline2;
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.totalPrice,
       builder: (context, value) {
-        return Text("PRIX TOTAL: $value€", style: textStyle,);
+        return Text("PRIX TOTAL: $value€", style: MyTextStyles.headline2, textAlign: TextAlign.center,);
       }
     );
   }
