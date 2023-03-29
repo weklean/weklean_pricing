@@ -10,22 +10,20 @@ abstract class GenericSwitchWidget<T> extends StatelessWidget {
 
   final T selectedValue;
   final void Function(T) onChanged;
-  final double? leftPadding;
   const GenericSwitchWidget({
     Key? key,
     required this.firstOption,
     required this.secondOption,
     required this.selectedValue,
     required this.onChanged,
-    this.leftPadding
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: const SizedBox.shrink(),
       title: Row(
         children: [
-          SizedBox(width: leftPadding,),
           Text(firstOption.label),
           Switch(
             value: selectedValue == secondOption.value ? true : false,
@@ -46,7 +44,6 @@ class VideosFrequencySwitch extends GenericSwitchWidget<VideosFrequency> {
     required super.selectedValue,
     required super.onChanged
   }) : super(
-    leftPadding: 32,
     firstOption: const SliderOption<VideosFrequency>(label: 'chaque event', value: VideosFrequency.eachEvent),
     secondOption: const SliderOption<VideosFrequency>(label: '1 event sur 2', value: VideosFrequency.halfEvents),
   );
