@@ -51,7 +51,7 @@ class CartModel extends Equatable {
   }
 
   double get pricePerEvent {
-    return eventBasePrice + inAppAdsPrice + _supervisionPrice + giftCardPrice;
+    return eventBasePrice + inAppAdsPrice + _supervisionPrice + marketplacePresencePrice;
   }
 
   double get totalPrice {
@@ -61,20 +61,16 @@ class CartModel extends Equatable {
   double get eventBasePrice {
     double price = max(0, participants) * max(0, kleansPerParticipant.toEuro().toDouble());
 
-    if (customer == CustomerType.mairie) {
-      if (eventsQuantity <= 4) {
-        price += 500;
-      } else if (eventsQuantity <= 7) {
-        price += 300;
-      }
-    }
-    else if (customer == CustomerType.entreprise) {
+    if (customer == CustomerType.entreprise) {
       if (eventsQuantity <= 4) {
         price += 200;
       } else if (eventsQuantity <= 7) {
-        price += 0;
-      } else {
-        price -= -100;
+        price += 100;
+      }
+    }
+    else if (customer == CustomerType.mairie) {
+      if (eventsQuantity <= 4) {
+        price += 200;
       }
     }
     return price;
@@ -85,8 +81,8 @@ class CartModel extends Equatable {
     return 0;
   }
 
-  double get giftCardPrice {
-    if (marketplacePresence == true && customer == CustomerType.entreprise) return 1400;
+  double get marketplacePresencePrice {
+    if (marketplacePresence == true && customer == CustomerType.entreprise) return 900;
     return 0;
   }
 
