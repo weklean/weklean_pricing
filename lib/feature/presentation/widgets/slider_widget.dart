@@ -47,7 +47,7 @@ class EventsQuantitySlider extends _GenericSlider {
     min: 1,
     max: 10,
     divisions: 9,
-    label: 'Events',
+    label: "Nombre d'Events",
     valueText: value.toString()
   );
 }
@@ -58,16 +58,16 @@ class ParticipantsSlider extends _GenericSlider {
     required super.value,
     required super.onChanged
   }) : super(
-    min: 10,
+    min: 20,
     max: 50,
-    divisions: 40,
+    divisions: 6,
     label: 'Participants par event',
     valueText: value.toString()
   );
 }
 
-class KleansPerParticipantSlider extends _GenericSlider {
-  KleansPerParticipantSlider({
+class RewardPerParticipantSlider extends _GenericSlider {
+  RewardPerParticipantSlider({
     super.key,
     required super.value,
     required super.onChanged
