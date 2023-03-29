@@ -61,7 +61,7 @@ class ParticipantsSlider extends _GenericSlider {
     min: 10,
     max: 50,
     divisions: 40,
-    label: 'Particpants par event',
+    label: 'Participants par event',
     valueText: value.toString()
   );
 }
@@ -74,7 +74,7 @@ class KleansPerParticipantSlider extends _GenericSlider {
   }) : super(
     min: 100,
     max: 200,
-    divisions: 10,
+    divisions: 2,
     label: 'Recompense par utilisateur par event',
     valueText: "${value.toEuro()} €"
   );
