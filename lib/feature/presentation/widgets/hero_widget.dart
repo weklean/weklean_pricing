@@ -8,13 +8,18 @@ class HeroWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: 250,
-      color: Colors.green,
+      height: 400,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.fitWidth,
+          image: AssetImage("assets/illustrations/hero_background.jpg")
+        )
+      ),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: MyShapes.defaultBorderRadius
+          color: Colors.white,
+          borderRadius: MyShapes.defaultBorderRadius
         ),
         height: 150,
         width: MediaQuery.of(context).size.width * 0.6,
