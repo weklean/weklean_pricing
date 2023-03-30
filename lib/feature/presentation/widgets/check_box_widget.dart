@@ -1,49 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:weklean_pricing/core/style.dart';
 
-class InAppAdsCheckBox extends CheckboxListTile {
-  const InAppAdsCheckBox({
-    super.key,
+abstract class _GenericCheckBoxListTile extends CheckboxListTile {
+  _GenericCheckBoxListTile({
+    required super.value,
+    required super.onChanged,
+    super.enabled,
+    required String title,
+    required String description
+  }) : super(
+    title: Text(title, style: CustomStyle.titleTextStyle),
+    subtitle: Text(description, style: CustomStyle.bodyTextStyle,),
+    controlAffinity: ListTileControlAffinity.leading,
+  );
+
+}
+
+class InAppAdsCheckBox extends _GenericCheckBoxListTile {
+  InAppAdsCheckBox({
     required super.value,
     required super.onChanged,
   }) : super(
-    controlAffinity: ListTileControlAffinity.leading,
-    title: const Text('Publicité'),
-    subtitle: const Text('Bannière publicitaire sous chacun de vos Events')
+    title: 'Publicité',
+    description: 'Bannière publicitaire sous chacun de vos Events',
   );
 }
 
-class MarketplacePresenceCheckBox extends CheckboxListTile {
-  const MarketplacePresenceCheckBox({
-    super.key,
+class MarketplacePresenceCheckBox extends _GenericCheckBoxListTile {
+  MarketplacePresenceCheckBox({
     required super.value,
     required super.onChanged,
   }) : super(
-    controlAffinity: ListTileControlAffinity.leading,
-    title: const Text('Présence Marketplace'),
-    subtitle: const Text('1 event = 1 mois de présence marketplace\n1 an de présence au delà de 8 events')
+    title: 'Présence Marketplace',
+    description: '1 event = 1 mois de présence marketplace\n1 an de présence au delà de 8 events'
   );
 }
 
-class SupervisionCheckBox extends CheckboxListTile {
-  const SupervisionCheckBox({
-    super.key,
+class SupervisionCheckBox extends _GenericCheckBoxListTile {
+  SupervisionCheckBox({
     required super.value,
     required super.onChanged,
   }) : super(
-    enabled: false,
-    controlAffinity: ListTileControlAffinity.leading,
-    title: const Text('Organisation'),
-    subtitle: const Text("Encadrement de l'event + matériel")
+    title: 'Organisation (obligatoire)',
+    description: "Encadrement de l'event + matériel",
+    enabled: false
   );
 }
 
-class ShootVideosCheckBox extends CheckboxListTile {
-  const ShootVideosCheckBox({
-    super.key,
+class ShootVideosCheckBox extends _GenericCheckBoxListTile {
+  ShootVideosCheckBox({
     required super.value,
     required super.onChanged,
   }) : super(
-    controlAffinity: ListTileControlAffinity.leading,
-    title: const Text('Videos'),
+    title: 'Videos',
+    description: '3 videos filmees durant vos events pour votre communication'
   );
 }

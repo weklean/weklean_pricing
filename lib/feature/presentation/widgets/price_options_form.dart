@@ -1,30 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weklean_package/weklean_package.dart';
+import 'package:weklean_pricing/core/style.dart';
 import 'package:weklean_pricing/feature/domain/models/cart_model.dart';
 import 'package:weklean_pricing/feature/presentation/blocs/cart_cubit.dart';
 import 'package:weklean_pricing/feature/presentation/widgets/check_box_widget.dart';
 import 'package:weklean_pricing/feature/presentation/widgets/slider_widget.dart';
 import 'package:weklean_pricing/feature/presentation/widgets/switch_widget.dart';
 
+class PriceOptionsFormDesktopView extends StatelessWidget {
+  const PriceOptionsFormDesktopView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const [
+        Spacer(),
+        Expanded(
+          flex: 3,
+          child: PriceOptionsForm()
+        ),
+        Spacer()
+      ],
+    );
+  }
+}
+
 class PriceOptionsForm extends StatelessWidget {
   const PriceOptionsForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        _CustomerTypeSwitch(),
-        _SupervisionCheckBox(),
-        _EventsQuantitySlider(),
-        _ParticipantsSlider(),
-        _RewardPerParticipantSlider(),
-        _ShootVideosCheckBox(),
-        _VideoFrequencySwitch(),
-        _InAppAdsCheckBox(),
-        _MarketplacePresenceCheckBox(),
-      ],
+    return Padding(
+      padding: MyShapes.bigPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _SectionTitle('1) Choisissez vos paramètres'),
+          const _CustomerTypeSwitch(),
+          const _SupervisionCheckBox(),
+          const _EventsQuantitySlider(),
+          const _ParticipantsSlider(),
+          const _RewardPerParticipantSlider(),
+
+          _SectionTitle('2) Séléctionnez vos options supplémentaires'),
+          const _ShootVideosCheckBox(),
+          const _VideoFrequencySwitch(),
+          const _InAppAdsCheckBox(),
+          const _MarketplacePresenceCheckBox(),
+
+          const _TotalPriceText()
+        ],
+      ),
     );
   }
+}
+
+class _TotalPriceText extends StatelessWidget {
+  const _TotalPriceText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<CartCubit, CartState, double>(
+      selector: (state) => state.cart.totalPrice,
+      builder: (context, value) {
+        return Column(
+          children: [
+            _SectionTitle("PRIX TOTAL:",),
+            Text(
+              "$value€",
+              style: MyTextStyles.headline3Primary,
+              textAlign: TextAlign.center,
+            )
+          ],
+        );
+      }
+    );
+  }
+}
+
+
+class _SectionTitle extends Padding {
+  _SectionTitle(String data) : super(
+    padding: MyShapes.mediumPadding,
+    child: Text(
+      data,
+      style: CustomStyle.sectionTitleStyle,
+      textAlign: TextAlign.left
+    )
+  );
+
 }
 
 class _MarketplacePresenceCheckBox extends StatelessWidget {
@@ -84,7 +149,7 @@ class _RewardPerParticipantSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<CartCubit, CartState, double>(
-      selector: (state) => state.cart.kleansPerParticipant,
+      selector: (state) => state.cart.rewardPerParticipant,
       builder: (context, value) {
         return RewardPerParticipantSlider(
           value: value,

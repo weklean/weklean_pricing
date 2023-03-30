@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weklean_package/weklean_package.dart';
+import 'package:weklean_pricing/core/style.dart';
 
 abstract class _GenericSlider extends StatelessWidget {
   final String label;
@@ -7,7 +7,7 @@ abstract class _GenericSlider extends StatelessWidget {
   final double min;
   final double max;
   final int divisions;
-  final String valueText;
+  final String Function(double)? textFormat;
   final void Function(double) onChanged;
   const _GenericSlider({
     Key? key,
@@ -16,30 +16,56 @@ abstract class _GenericSlider extends StatelessWidget {
     required this.min,
     required this.max,
     required this.divisions,
-    required this.valueText,
+   this.textFormat,
     required this.onChanged
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Text(label),
-      title: Slider(
-        label: label,
-        value: value,
-        min: min,
-        max: max,
-        divisions: divisions,
-        onChanged: onChanged
-      ),
-      trailing: Text(valueText),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          "$label: ${textFormat?.call(value) ?? value.toString()}",
+          style: CustomStyle.titleTextStyle,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                textFormat?.call(min) ?? min.toString(),
+                textAlign: TextAlign.center,
+                style: CustomStyle.bodyTextStyle,
+              )
+            ),
+            Expanded(
+              flex: 8,
+              child: Slider(
+                label: textFormat?.call(value) ?? value.toString(),
+                value: value,
+                min: min,
+                max: max,
+                divisions: divisions,
+                onChanged: onChanged
+              ),
+            ),
+            Expanded(
+              child: Text(
+                textFormat?.call(max) ?? max.toString(),
+                textAlign: TextAlign.center,
+                style: CustomStyle.bodyTextStyle
+              )
+            )
+          ],
+        )
+      ],
     );
   }
 }
 
 
 class EventsQuantitySlider extends _GenericSlider {
-  EventsQuantitySlider({
+  const EventsQuantitySlider({
     super.key,
     required super.value,
     required super.onChanged
@@ -48,12 +74,11 @@ class EventsQuantitySlider extends _GenericSlider {
     max: 10,
     divisions: 9,
     label: "Nombre d'Events",
-    valueText: value.toString()
   );
 }
 
 class ParticipantsSlider extends _GenericSlider {
-  ParticipantsSlider({
+  const ParticipantsSlider({
     super.key,
     required super.value,
     required super.onChanged
@@ -62,7 +87,6 @@ class ParticipantsSlider extends _GenericSlider {
     max: 50,
     divisions: 6,
     label: 'Participants par event',
-    valueText: value.toString()
   );
 }
 
@@ -72,10 +96,10 @@ class RewardPerParticipantSlider extends _GenericSlider {
     required super.value,
     required super.onChanged
   }) : super(
-    min: 100,
-    max: 200,
+    min: 10,
+    max: 20,
     divisions: 2,
     label: 'Recompense par utilisateur par event',
-    valueText: "${value.toEuro()} €"
+    textFormat: (double value) => "$value €"
   );
 }

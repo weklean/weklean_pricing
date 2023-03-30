@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:weklean_pricing/core/style.dart';
 import 'package:weklean_pricing/feature/domain/models/cart_model.dart';
 
 abstract class GenericSwitchWidget<T> extends StatelessWidget {
@@ -24,14 +25,14 @@ abstract class GenericSwitchWidget<T> extends StatelessWidget {
       leading: const SizedBox.shrink(),
       title: Row(
         children: [
-          Text(firstOption.label),
+          Text(firstOption.label, style: CustomStyle.titleTextStyle,),
           Switch(
             value: selectedValue == secondOption.value ? true : false,
             onChanged: (bool value) {
               value ? onChanged(secondOption.value) : onChanged(firstOption.value);
             }
           ),
-          Text(secondOption.label)
+          Text(secondOption.label, style: CustomStyle.titleTextStyle)
         ],
       ),
     );

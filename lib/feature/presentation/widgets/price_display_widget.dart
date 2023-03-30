@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weklean_package/weklean_package.dart';
+import 'package:weklean_pricing/core/style.dart';
 import 'package:weklean_pricing/feature/presentation/blocs/cart_cubit.dart';
 
 class PriceDisplayWidget extends StatelessWidget {
@@ -20,12 +21,22 @@ class PriceDisplayWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          _TotalPriceText(),
-          _EventUnitPrice(),
-          _VideosTotalPrice(),
-          _EventsWithVideosQuantity(),
-          _MarketplacePresenceDuration()
+        children: [
+          const _TotalPriceText(),
+          Row(
+            children: [
+              const Spacer(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  _EventUnitPrice(),
+                  _VideosTotalPrice(),
+                  _EventsWithVideosQuantity(),
+                  _MarketplacePresenceDuration()
+                ],
+              )
+            ],
+          )
         ],
       ),
     );
@@ -39,11 +50,23 @@ class _TotalPriceText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: MyShapes.mediumPadding,
-      child: BlocSelector<CartCubit, CartState, double>(
-        selector: (state) => state.cart.totalPrice,
-        builder: (context, value) {
-          return Text("PRIX TOTAL: $value€", style: MyTextStyles.headline2, textAlign: TextAlign.center,);
-        }
+      child: Column(
+        children: [
+          Text(
+            "PRIX TOTAL:",
+            style: CustomStyle.sectionTitleStyle,
+          ),
+          BlocSelector<CartCubit, CartState, double>(
+            selector: (state) => state.cart.totalPrice,
+            builder: (context, value) {
+              return Text(
+                "$value€",
+                style: MyTextStyles.headline3Primary,
+                textAlign: TextAlign.center,
+              );
+            }
+          ),
+        ],
       ),
     );
   }
@@ -54,11 +77,12 @@ class _EventUnitPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2;
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.pricePerEvent,
       builder: (context, value) {
-        return Text("Prix par Event: $value€", style: textStyle,);
+        return _BodyText(
+          "Prix par Event: $value€",
+        );
       }
     );
   }
@@ -69,11 +93,12 @@ class _VideosTotalPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2;
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.totalVideosPrice,
       builder: (context, value) {
-        return Text("Prix total videos: $value€", style: textStyle,);
+        return _BodyText(
+          "Prix total videos: $value€",
+        );
       }
     );
   }
@@ -84,11 +109,12 @@ class _EventsWithVideosQuantity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2;
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.eventsWithVideos,
       builder: (context, value) {
-        return Text("Nombre d'Events avec videos: $value", style: textStyle,);
+        return _BodyText(
+          "Nombre d'Events avec videos: $value",
+        );
       }
     );
   }
@@ -99,12 +125,20 @@ class _MarketplacePresenceDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2;
     return BlocSelector<CartCubit, CartState, double>(
       selector: (state) => state.cart.marketplaceDisplayedMonths,
       builder: (context, value) {
-        return Text("Temps de presence marketplace: $value", style: textStyle,);
+        return _BodyText(
+          "Temps de presence marketplace: $value",
+        );
       }
     );
   }
+}
+
+class _BodyText extends Text {
+  const _BodyText(super.data) : super (
+    style: MyTextStyles.bodyText2,
+    textAlign: TextAlign.start,
+  );
 }

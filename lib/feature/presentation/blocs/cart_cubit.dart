@@ -21,7 +21,7 @@ class CartCubit extends Cubit<CartState> {
   }
 
   void onKleansPerParticipantChanged(double value) {
-    cart = cart.copyWith(kleansPerParticipant: value);
+    cart = cart.copyWith(rewardPerParticipant: value);
     emitNotLoading();
   }
 

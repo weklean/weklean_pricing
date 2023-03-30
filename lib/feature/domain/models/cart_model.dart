@@ -1,13 +1,12 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:weklean_package/weklean_package.dart';
 
 class CartModel extends Equatable {
   final CustomerType customer;
   final double eventsQuantity;
   final double participants;
-  final double kleansPerParticipant;
+  final double rewardPerParticipant;
   final bool supervision;
   final bool marketplacePresence;
   final bool shootVideos;
@@ -17,7 +16,7 @@ class CartModel extends Equatable {
   const CartModel({
     required this.eventsQuantity,
     required this.participants,
-    required this.kleansPerParticipant,
+    required this.rewardPerParticipant,
     required this.supervision,
     required this.marketplacePresence,
     required this.shootVideos,
@@ -30,7 +29,7 @@ class CartModel extends Equatable {
     CustomerType? customer,
     double? eventsQuantity,
     double? participants,
-    double? kleansPerParticipant,
+    double? rewardPerParticipant,
     bool? supervision,
     bool? marketplacePresence,
     bool? shootVideos,
@@ -41,7 +40,7 @@ class CartModel extends Equatable {
       customer: customer ?? this.customer,
       eventsQuantity: eventsQuantity ?? this.eventsQuantity,
       participants: participants ?? this.participants,
-      kleansPerParticipant: kleansPerParticipant ?? this.kleansPerParticipant,
+      rewardPerParticipant: rewardPerParticipant ?? this.rewardPerParticipant,
       supervision: supervision ?? this.supervision,
       marketplacePresence: marketplacePresence ?? this.marketplacePresence,
       shootVideos: shootVideos ?? this.shootVideos,
@@ -59,7 +58,7 @@ class CartModel extends Equatable {
   }
 
   double get eventBasePrice {
-    double price = max(0, participants) * max(0, kleansPerParticipant.toEuro().toDouble());
+    double price = max(0, participants) * max(0, rewardPerParticipant.toDouble());
 
     if (customer == CustomerType.entreprise) {
       if (eventsQuantity <= 4) {
@@ -119,7 +118,7 @@ class CartModel extends Equatable {
       customer: CustomerType.entreprise,
       eventsQuantity: 10,
       participants: 50,
-      kleansPerParticipant: 200,
+      rewardPerParticipant: 20,
       supervision: true,
       marketplacePresence: true,
       shootVideos: true,
@@ -132,7 +131,7 @@ class CartModel extends Equatable {
   List<Object?> get props => [
     eventsQuantity,
     participants,
-    kleansPerParticipant,
+    rewardPerParticipant,
     supervision,
     marketplacePresence,
     shootVideos,
