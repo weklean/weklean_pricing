@@ -69,7 +69,7 @@ class _TotalPriceText extends StatelessWidget {
       builder: (context, value) {
         return Column(
           children: [
-            _SectionTitle("PRIX TOTAL:",),
+            _SectionTitle("Prix total:",),
             Text(
               "$value€",
               style: MyTextStyles.headline3Primary,
