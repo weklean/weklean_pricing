@@ -4,6 +4,7 @@ import 'package:weklean_package/weklean_package.dart';
 import 'package:weklean_pricing/core/style.dart';
 import 'package:weklean_pricing/feature/domain/models/cart_model.dart';
 import 'package:weklean_pricing/feature/presentation/blocs/cart_cubit.dart';
+import 'package:weklean_pricing/feature/presentation/widgets/options_card_selector_widget.dart';
 import 'package:weklean_pricing/feature/presentation/widgets/check_box_widget.dart';
 import 'package:weklean_pricing/feature/presentation/widgets/slider_widget.dart';
 import 'package:weklean_pricing/feature/presentation/widgets/switch_widget.dart';
@@ -36,14 +37,16 @@ class PriceOptionsForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _SectionTitle('1) Choisissez vos paramètres'),
-          const _CustomerTypeSwitch(),
+          _SectionTitle('1) Vous êtes:'),
+          const _CustomerOptionsCardSelector(),
+
+          _SectionTitle('2) Choisissez vos paramètres'),
           const _SupervisionCheckBox(),
           const _EventsQuantitySlider(),
           const _ParticipantsSlider(),
           const _RewardPerParticipantSlider(),
 
-          _SectionTitle('2) Séléctionnez vos options supplémentaires'),
+          _SectionTitle('3) Séléctionnez vos options supplémentaires'),
           const _ShootVideosCheckBox(),
           const _VideoFrequencySwitch(),
           const _InAppAdsCheckBox(),
@@ -78,7 +81,6 @@ class _TotalPriceText extends StatelessWidget {
     );
   }
 }
-
 
 class _SectionTitle extends Padding {
   _SectionTitle(String data) : super(
@@ -230,6 +232,24 @@ class _VideoFrequencySwitch extends StatelessWidget {
     );
   }
 }
+
+class _CustomerOptionsCardSelector extends StatelessWidget {
+  const _CustomerOptionsCardSelector({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<CartCubit, CartState, CustomerType>(
+      selector: (state) => state.cart.customer,
+      builder: (context, value) {
+        return CustomerOptionsCardSelectorWidget(
+          selectedValue: value,
+          onChanged: context.read<CartCubit>().onCustomerTypeChanged
+        );
+      }
+    );
+  }
+}
+
 
 class _CustomerTypeSwitch extends StatelessWidget {
   const _CustomerTypeSwitch({Key? key}) : super(key: key);
